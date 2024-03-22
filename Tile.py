@@ -2,7 +2,7 @@ class Tile():
     # Piece constants
     P_NONE = 0
     P_White = 1
-    P_Black = 2
+    P_Black = 3
 
     # Outline constants
     O_NONE = 0
