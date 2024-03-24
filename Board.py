@@ -30,7 +30,7 @@ class Board:
                 elif c==1 :
                     if r%2==0:print('|', end="")
                     else:print('-', end="")
-                else: print(str(c)[0], end="")
+                else: print(str( c)[0], end="")
             print()
 
 
