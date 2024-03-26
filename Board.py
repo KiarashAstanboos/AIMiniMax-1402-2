@@ -49,7 +49,6 @@ class Board:
 
     def canPlaceWall(self, row, column, direction: str) -> bool:
         if row % 2 == 0 or column % 2 == 0 or not self.valid(row, column) or self.board[row][column] != -1:
-            raise Exception('invalid cordinates')
             return False
         else:
             if direction == 'vertical':
@@ -78,7 +77,7 @@ class Board:
         # TODO Jump handle nashode. 'canGo' ham bayad edit beshe
 
     def go(self, player,
-           direction):  # TODO class player bayad takmil she vase in. bade piade sazi 'PLAYER' debug beshe.
+           direction):
         # TODO Board bayad update beshe: jaye qablish block khali va jaye jadidesh ham esmesh biad
         if self.canGo(player, direction):
             if direction == 'up':
@@ -102,15 +101,15 @@ class Board:
     def canGo(self, player, direction) -> bool:
         if direction == 'up':
             return self.valid(player.row - 2,
-                              player.column) and player.row - 1 == -1  ## ham valid bashe ham wall nabashe
+                              player.column) and self.board[player.row - 1][player.column] == -1  ## ham valid bashe ham wall nabashe
 
         elif direction == 'down':
-            return self.valid(player.row - 2, player.column) and player.row + 1 == -1
+            return self.valid(player.row + 2, player.column) and self.board[player.row + 1][player.column] == -1
         elif direction == 'right':
-            return self.valid(player.row - 2, player.column) and player.column + 1 == -1
+            return self.valid(player.row + 2, player.column) and self.board[player.row ][player.column+1] == -1
 
         elif direction == 'left':
-            return self.valid(player.row - 2, player.column) and player.column - 1 == -1
+            return self.valid(player.row - 2, player.column) and self.board[player.row ][player.column-1] == -1
 
         else:
             raise Exception('invalid input')

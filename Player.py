@@ -20,11 +20,11 @@ class Player:
         if board.canGo(self, 'left'): available_actions.append(Action(None, None, 'left'))
 
         if self.walls > 0:
-            for i in range(1, len(board), 2):
-                for j in range(1, len(board[i]), 2):
+            for i in range(1, board.size, 2):
+                for j in range(1, len(board.board[i]), 2):
                     if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'): available_actions.append(Action(i, j, 'horizontal'))
-
+        return available_actions
     def doGo(self, board:Board,direction): # TODO motmaen nistam doroste meqdar dehim ya na. bayad be  go player pas dade beshe
 
         board.go(self,direction)
