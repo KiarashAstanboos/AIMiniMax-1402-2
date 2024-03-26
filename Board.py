@@ -6,7 +6,7 @@ class Board:
     # Player1 = 11
     # Player2 = 22
 
-    def __init__(self, size) -> None:
+    def __init__(self, size, player1, player2) -> None:
 
         self.size = size * 2 - 1
 
@@ -20,7 +20,7 @@ class Board:
         # self.player1 = player1
         # self.player2 = player2
 
-    def display_board(self):
+    def displayboard(self):
         for indexR, r in enumerate(self.board):
 
             for indexC, c in enumerate(r):
@@ -40,14 +40,14 @@ class Board:
                     print(str(c)[0], end=" ")
             print()
 
-    def valid(self, row, col):
+    def valid(self, row, col) -> bool:
         """
         Returns true if the given row and col represent a valid location on
-        the konane board.
+        the Quoridor board.
         """
         return row >= 0 and col >= 0 and row < self.size and col < self.size
 
-    def can_Place_Wall(self, row, column, direction: str):
+    def canPlaceWall(self, row, column, direction: str) -> bool:
         if row % 2 == 0 or column % 2 == 0 or not self.valid(row, column) or self.board[row][column] != -1:
             raise Exception('invalid cordinates')
             return False
@@ -65,8 +65,8 @@ class Board:
             else:
                 raise Exception('invalid direction!')
 
-    def add_Wall(self, row, column, direction: str):
-        if self.can_Place_Wall(row, column, direction):
+    def addWall(self, row, column, direction: str):
+        if self.canPlaceWall(row, column, direction):
             if direction == 'vertical':
                 self.board[row][column] = 1
                 self.board[row + 1][column] = 1
@@ -75,37 +75,45 @@ class Board:
                 self.board[row][column] = 1
                 self.board[row][column + 1] = 1
                 self.board[row][column - 1] = 1
+        # TODO Jump handle nashode. 'canGo' ham bayad edit beshe
 
     def go(self, player,
            direction):  # TODO class player bayad takmil she vase in. bade piade sazi 'PLAYER' debug beshe.
-                        #TODO Board bayad update beshe: jaye qablish block khali va jaye jadidesh ham esmesh biad
+        # TODO Board bayad update beshe: jaye qablish block khali va jaye jadidesh ham esmesh biad
+        if self.canGo(player, direction):
+            if direction == 'up':
+
+                player.row -= 2
+
+            elif direction == 'down':
+
+                player.row += 2
+
+            elif direction == 'right':
+
+                player.column += 2
+
+            elif direction == 'left':
+
+                player.column -= 2
+
+        pass
+
+    def canGo(self, player, direction) -> bool:
         if direction == 'up':
-            if self.valid(player.row - 1, player.column):
-                player.row -= 1
-            else:
-                raise Exception('cant go this direction!')
+            return self.valid(player.row - 2,
+                              player.column) and player.row - 1 == -1  ## ham valid bashe ham wall nabashe
+
         elif direction == 'down':
-            if self.valid(player.row - 1, player.column):
-                player.row += 1
-            else:
-                raise Exception('cant go this direction!')
+            return self.valid(player.row - 2, player.column) and player.row + 1 == -1
         elif direction == 'right':
-            if self.valid(player.row - 1, player.column):
-                player.column += 1
-            else:
-                raise Exception('cant go this direction!')
+            return self.valid(player.row - 2, player.column) and player.column + 1 == -1
+
         elif direction == 'left':
-            if self.valid(player.row - 1, player.column):
-                player.column -= 1
-            else:
-                raise Exception('cant go this direction!')
-        else: raise Exception('invalid input')
+            return self.valid(player.row - 2, player.column) and player.column - 1 == -1
+
+        else:
+            raise Exception('invalid input')
 
 
-pass
 
-Board = Board(9)
-# Board.display_board()
-Board.add_Wall(1, 1, 'vertical')
-Board.add_Wall(3, 3, 'horizontal')
-Board.display_board()
