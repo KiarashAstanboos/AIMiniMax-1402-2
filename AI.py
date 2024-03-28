@@ -48,26 +48,31 @@ class AI:
         return result
 
     def minimax(self, board: Board, player: Player, opponent: Player, depth):
-        value, move = self.max(board, player, opponent, depth)
+        alpha = -100000000
+        beta = 100000000
+        value, move = self.max(board, player, opponent, depth, alpha, beta)
 
         return move['action']
 
-    def max(self, board: Board, player: Player, opponent: Player, depth):
+    def max(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
         if depth == 0: return utility(board, player, opponent), None
 
         possible_states = self.succusors(board, player, opponent)
         beststate = None
         bestvalue = self.MIN_VALUE
         for state in possible_states:
-            temp, bb = self.min(state['board'], state['player'], state['opponent'], depth - 1)
+            temp, bb = self.min(state['board'], state['player'], state['opponent'], depth - 1, alpha, beta)
 
             if bestvalue < temp:
                 bestvalue = temp
                 beststate = state
 
+            if bestvalue >= beta: return bestvalue, beststate
+            alpha = max(alpha, bestvalue)
+
         return bestvalue, beststate
 
-    def min(self, board: Board, player: Player, opponent: Player, depth):
+    def min(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
 
         if depth == 0: return utility(board, player, opponent), None
 
@@ -75,10 +80,13 @@ class AI:
         beststate = None
         bestvalue = self.MAX_VALUE
         for state in possible_states:
-            temp, bb = self.max(state['board'], state['player'], state['opponent'], depth - 1)
+            temp, bb = self.max(state['board'], state['player'], state['opponent'], depth - 1, alpha, beta)
 
             if bestvalue > temp:
-                beststate = state
                 bestvalue = temp
+                beststate = state
+
+            if bestvalue <= alpha : return bestvalue , beststate
+            beta = min(beta , bestvalue)
 
         return bestvalue, beststate
