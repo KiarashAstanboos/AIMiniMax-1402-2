@@ -68,3 +68,9 @@ class Player:
                     stack.append((new_x, new_y))  # Add legal moves to the stack
 
         return False  # No path found
+
+    def terminal_test(self):
+        if self.goalRow == self.row:
+            return True
+        else:
+            return False
