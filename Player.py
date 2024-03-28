@@ -62,8 +62,9 @@ class Player:
             # Check all adjacent cells
             for dx, dy in [(2, 0), (-2, 0), (0, 2), (0, -2)]:
                 new_xW,new_yW=self.checkForWall(dx,dy)
+                new_xW, new_yW=x + new_xW, y + new_yW
                 new_x, new_y = x + dx, y + dy
-                if board.valid(new_x, new_y) and board[new_xW,new_yW]==-1:
+                if board.valid(new_x, new_y) and board.board[new_xW][new_yW]==-1:
                     stack.append((new_x, new_y))  # Add legal moves to the stack
 
         return False  # No path found

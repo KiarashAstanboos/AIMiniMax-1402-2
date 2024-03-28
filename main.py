@@ -14,7 +14,14 @@ valid=player1.getValidActions(board)
 player1.doGo(board,'up')
 player1.doGo(board,'left')
 player2.doGo(board,'right')
-player1.doBuild(board,1,1,'vertical')
+player1.doBuild(board,1,1,'horizontal')
+player1.doBuild(board,1,5,'horizontal')
+player1.doBuild(board,1,9,'horizontal')
+player1.doBuild(board,1,13,'horizontal')
+player1.doBuild(board,3,13,'vertical')
+player1.doBuild(board,5,15,'horizontal')
+
+
 board.displayboard()
-print (valid)
+print (player1.pathToOtherSide(board))
 
