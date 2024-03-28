@@ -12,7 +12,7 @@ class Player:
 
     # TODO yek rah baraye residan be maqsad handle nashode!
     def getValidActions(self, board: Board) -> typing.List[
-        Action]:  # TODO motmaen nistam doroste meqdar dehim ya na. bayad be can go player pas dade beshe
+        Action]:
         available_actions = []
         if board.canGo(self, 'up'): available_actions.append(Action(None, None, 'up'))
         if board.canGo(self, 'down'): available_actions.append(Action(None, None, 'down'))
@@ -25,7 +25,7 @@ class Player:
                     if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
-    def doGo(self, board:Board,direction): # TODO motmaen nistam doroste meqdar dehim ya na. bayad be  go player pas dade beshe
+    def doGo(self, board:Board,direction):
 
         board.go(self,direction)
     def doBuild(self,board,row,column,direction):

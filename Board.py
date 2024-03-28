@@ -1,3 +1,4 @@
+
 class Board:
     # const
     # Empty_block = 0
@@ -14,8 +15,8 @@ class Board:
         for i in range(0, len(self.board), 2):
             for j in range(0, len(self.board[i]), 2):
                 self.board[i][j] = 0
-        self.board[0][size - 1] = 22
-        self.board[self.size - 1][size - 1] = 11  # TODO mokhtasat player bayad az objecctesh gerefte beshe
+        self.board[player2.row][player2.column] = 22
+        self.board[player1.row][player1.column] = 11
 
         # self.player1 = player1
         # self.player2 = player2
@@ -78,7 +79,8 @@ class Board:
 
     def go(self, player,
            direction):
-        # TODO Board bayad update beshe: jaye qablish block khali va jaye jadidesh ham esmesh biad
+
+        self.board[player.row][player.column]=0
         if self.canGo(player, direction):
             if direction == 'up':
 
@@ -95,8 +97,7 @@ class Board:
             elif direction == 'left':
 
                 player.column -= 2
-
-        pass
+        self.board[player.row][player.column] = int(player.name[-1]*2)
 
     def canGo(self, player, direction) -> bool:
         if direction == 'up':
@@ -106,10 +107,10 @@ class Board:
         elif direction == 'down':
             return self.valid(player.row + 2, player.column) and self.board[player.row + 1][player.column] == -1
         elif direction == 'right':
-            return self.valid(player.row + 2, player.column) and self.board[player.row ][player.column+1] == -1
+            return self.valid(player.row , player.column+ 2) and self.board[player.row ][player.column+1] == -1
 
         elif direction == 'left':
-            return self.valid(player.row - 2, player.column) and self.board[player.row ][player.column-1] == -1
+            return self.valid(player.row , player.column- 2) and self.board[player.row ][player.column-1] == -1
 
         else:
             raise Exception('invalid input')
