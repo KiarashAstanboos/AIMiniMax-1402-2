@@ -31,7 +31,7 @@ class Player:
         if self.walls > 0:
             for i in range(1, board.size, 2):
                 for j in range(1, len(board.board[i]), 2):
-                    # if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
+                    if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
