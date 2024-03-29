@@ -1,5 +1,6 @@
 from Action import Action
 from Board import Board
+import copy
 import typing
 
 
@@ -31,8 +32,15 @@ class Player:
         if self.walls > 0:
             for i in range(1, board.size, 2):
                 for j in range(1, len(board.board[i]), 2):
-                    if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
-                    if board.canPlaceWall(i, j, 'horizontal'): available_actions.append(Action(i, j, 'horizontal'))
+                    if board.canPlaceWall(i, j, 'vertical'):
+                        board_copy = copy.deepcopy(board)
+                        board_copy.addWall(i,j,'vertical')
+                        if self.pathToOtherSide(board_copy):  available_actions.append(Action(i, j, 'vertical'))
+                    if board.canPlaceWall(i, j, 'horizontal'):
+                        board_copy2 = copy.deepcopy(board)
+                        board_copy2.addWall(i, j, 'horizontal')
+                        available_actions.append(Action(i, j, 'horizontal'))
+                        if self.pathToOtherSide(board_copy2):available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
     def doGo(self, board: Board, direction):

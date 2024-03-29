@@ -17,8 +17,8 @@ class Board:
         self.board[player2.row][player2.column] = 22
         self.board[player1.row][player1.column] = 11
 
-        # self.player1 = player1
-        # self.player2 = player2
+        self.player1 = player1
+        self.player2 = player2
 
     def displayboard(self):
         for indexR, r in enumerate(self.board):
