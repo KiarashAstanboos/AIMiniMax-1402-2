@@ -145,3 +145,37 @@ class Board:
                 return (False, False)
         else:
             raise  Exception('inavlid input')
+
+    def checkForWall(self, row, column):  # for pathToOtherSide
+        if row == 2:
+            return (1, 0)
+        elif row == -2:
+            return (-1, 0)
+        elif column == -2:
+            return (0, -1)
+        elif column == 2:
+            return (0, 1)
+
+    def pathToOtherSide(self,row,column,goalRow) -> bool:
+        stack = [(row, column)]
+        visited = set()
+        while stack:
+            x, y = stack.pop()
+            if x == goalRow:
+                return True  # Player reached the goal
+            if (x, y) in visited:
+                continue  # Skip already visited nodes
+            visited.add((x, y))
+
+            # Check all adjacent cells
+            for dx, dy in [(2, 0), (-2, 0), (0, 2), (0, -2)]:
+                new_xW, new_yW = self.checkForWall(dx, dy)
+                new_xW, new_yW = x + new_xW, y + new_yW
+                new_x, new_y = x + dx, y + dy
+                if self.valid(new_x, new_y) and self.board[new_xW][new_yW] == -1:
+                    stack.append((new_x, new_y))  # Add legal moves to the stack
+        return False  # No path found
+    def checkForTrap(self):
+        p1=self.pathToOtherSide(self.player1.row,self.player1.column,self.player1.goalRow)
+        p2 = self.pathToOtherSide(self.player2.row, self.player2.column, self.player2.goalRow)
+        return (p1 and p2)

@@ -3,7 +3,6 @@ from Board import Board
 from Action import Action, doAction
 from AI import AI
 
-
 size = 7
 depth = 3
 player2 = Player(10, 'player 2', 0, size - 1)
@@ -16,16 +15,10 @@ print()
 print()
 print()
 
-
 player1_ai = AI()
 player2_ai = AI()
 
-
-
 isPalyer1 = True
-
-
-
 
 while True:
     if isPalyer1:
@@ -74,18 +67,3 @@ while True:
         exit()
 
     isPalyer1 = not isPalyer1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

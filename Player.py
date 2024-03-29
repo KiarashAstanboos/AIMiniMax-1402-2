@@ -34,13 +34,12 @@ class Player:
                 for j in range(1, len(board.board[i]), 2):
                     if board.canPlaceWall(i, j, 'vertical'):
                         board_copy = copy.deepcopy(board)
-                        board_copy.addWall(i,j,'vertical')
-                        if self.pathToOtherSide(board_copy):  available_actions.append(Action(i, j, 'vertical'))
+                        board_copy.addWall(i, j, 'vertical')
+                        if board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'):
                         board_copy2 = copy.deepcopy(board)
                         board_copy2.addWall(i, j, 'horizontal')
-                        available_actions.append(Action(i, j, 'horizontal'))
-                        if self.pathToOtherSide(board_copy2):available_actions.append(Action(i, j, 'horizontal'))
+                        if board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
     def doGo(self, board: Board, direction):
@@ -51,36 +50,6 @@ class Player:
         board.addWall(row, column, direction)
         self.walls -= 1
 
-    def checkForWall(self, row, column):  # for pathToOtherSide
-        if row == 2:
-            return (1, 0)
-        elif row == -2:
-            return (-1, 0)
-        elif column == -2:
-            return (0, -1)
-        elif column == 2:
-            return (0, 1)
-
-    def pathToOtherSide(self, board: Board) -> bool:
-        stack = [(self.row, self.column)]
-        visited = set()
-        while stack:
-            x, y = stack.pop()
-            if x == self.goalRow:
-                return True  # Player reached the goal
-            if (x, y) in visited:
-                continue  # Skip already visited nodes
-            visited.add((x, y))
-
-            # Check all adjacent cells
-            for dx, dy in [(2, 0), (-2, 0), (0, 2), (0, -2)]:
-                new_xW, new_yW = self.checkForWall(dx, dy)
-                new_xW, new_yW = x + new_xW, y + new_yW
-                new_x, new_y = x + dx, y + dy
-                if board.valid(new_x, new_y) and board.board[new_xW][new_yW] == -1:
-                    stack.append((new_x, new_y))  # Add legal moves to the stack
-
-        return False  # No path found
 
     def terminal_test(self):
         if self.goalRow == self.row:
