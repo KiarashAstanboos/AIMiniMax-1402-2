@@ -18,15 +18,20 @@ class Player:
     def getValidActions(self, board: Board) -> typing.List[
         Action]:
         available_actions = []
-        if board.canGo(self, 'up'): available_actions.append(Action(None, None, 'up'))
-        if board.canGo(self, 'down'): available_actions.append(Action(None, None, 'down'))
-        if board.canGo(self, 'right'): available_actions.append(Action(None, None, 'right'))
-        if board.canGo(self, 'left'): available_actions.append(Action(None, None, 'left'))
+        cango1, jump = board.canGo(self, 'up')
+        cango2, jump = board.canGo(self, 'down')
+        cango3, jump = board.canGo(self, 'right')
+        cango4, jump = board.canGo(self, 'left')
+
+        if cango1: available_actions.append(Action(None, None, 'up'))
+        if cango2: available_actions.append(Action(None, None, 'down'))
+        if cango3: available_actions.append(Action(None, None, 'right'))
+        if cango4: available_actions.append(Action(None, None, 'left'))
 
         if self.walls > 0:
             for i in range(1, board.size, 2):
                 for j in range(1, len(board.board[i]), 2):
-                    if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
+                    # if board.canPlaceWall(i, j, 'vertical'): available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
@@ -61,10 +66,16 @@ class Player:
 
             # Check all adjacent cells
             for dx, dy in [(2, 0), (-2, 0), (0, 2), (0, -2)]:
-                new_xW,new_yW=self.checkForWall(dx,dy)
-                new_xW, new_yW=x + new_xW, y + new_yW
+                new_xW, new_yW = self.checkForWall(dx, dy)
+                new_xW, new_yW = x + new_xW, y + new_yW
                 new_x, new_y = x + dx, y + dy
-                if board.valid(new_x, new_y) and board.board[new_xW][new_yW]==-1:
+                if board.valid(new_x, new_y) and board.board[new_xW][new_yW] == -1:
                     stack.append((new_x, new_y))  # Add legal moves to the stack
 
         return False  # No path found
+
+    def terminal_test(self):
+        if self.goalRow == self.row:
+            return True
+        else:
+            return False

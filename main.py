@@ -1,27 +1,90 @@
 from Player import Player
 from Board import Board
+from Action import Action, doAction
+from AI import AI
 
-size = 9
+
+size = 5
 player2 = Player(10, 'player 2', 0, size - 1)
 player1 = Player(10, 'player 1', size * 2 - 2, size - 1)
 
 board = Board(size, player1, player2)
-# Board.display_board()
-# board.addWall(1, 1, 'vertical')
-# board.addWall(3, 3, 'horizontal')
-# board.displayboard()
-valid=player1.getValidActions(board)
-player1.doGo(board,'up')
-player1.doGo(board,'left')
-player2.doGo(board,'right')
-player1.doBuild(board,1,1,'horizontal')
-player1.doBuild(board,1,5,'horizontal')
-player1.doBuild(board,1,9,'horizontal')
-player1.doBuild(board,1,13,'horizontal')
-player1.doBuild(board,3,13,'vertical')
-player1.doBuild(board,5,15,'horizontal')
-
 
 board.displayboard()
-print (player1.pathToOtherSide(board))
+print()
+print()
+print()
+
+
+player1_ai = AI()
+player2_ai = AI()
+
+
+depth = 6
+isPalyer1 = True
+
+
+
+
+while True:
+    if isPalyer1:
+        ai_action = player1_ai.choose_action(board, player1, player2, depth)
+
+        doAction(ai_action, player1, board)
+
+        if ai_action.direction == "vertical":
+            print(f"AI {player1.name} chose to place a vertical wall at [{ai_action.row}][{ai_action.column}]:")
+            print()
+        elif ai_action.direction == "horizontal":
+            print(f"AI {player1.name} chose to place a horizontal wall at [{ai_action.row}][{ai_action.column}]:")
+            print()
+        else:
+            print(
+                f"AI {player1.name} chose to go {ai_action.direction}:"
+            )
+            print()
+
+    else:
+        ai_action = player2_ai.choose_action(board, player2, player1, depth)
+
+        doAction(ai_action, player2, board)
+
+        if ai_action.direction == "vertical":
+            print(f"AI {player2.name} chose to place a vertical wall at [{ai_action.row}][{ai_action.column}]:")
+            print()
+        elif ai_action.direction == "horizontal":
+            print(f"AI {player2.name} chose to place a horizontal wall at [{ai_action.row}][{ai_action.column}]:")
+            print()
+        else:
+            print(
+                f"AI {player2.name} chose to go {ai_action.direction}:"
+            )
+            print()
+
+    board.displayboard()
+    print()
+    print()
+
+    if player1.terminal_test():
+        print(f"{player1.name} wins!")
+        exit()
+    if player2.terminal_test():
+        print(f"{player2.name} wins!")
+        exit()
+
+    isPalyer1 = not isPalyer1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
