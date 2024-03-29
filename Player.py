@@ -35,11 +35,11 @@ class Player:
                     if board.canPlaceWall(i, j, 'vertical'):
                         board_copy = copy.deepcopy(board)
                         board_copy.addWall(i, j, 'vertical')
-                        if board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
+                        if not board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'):
                         board_copy2 = copy.deepcopy(board)
                         board_copy2.addWall(i, j, 'horizontal')
-                        if board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
+                        if not board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
     def doGo(self, board: Board, direction):

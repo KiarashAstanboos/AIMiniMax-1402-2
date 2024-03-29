@@ -11,6 +11,8 @@ player1 = Player(10, 'player 1', size * 2 - 2, size - 1)
 board = Board(size, player1, player2)
 
 board.displayboard()
+
+
 print()
 print()
 print()

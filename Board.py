@@ -74,7 +74,7 @@ class Board:
                 self.board[row][column] = 1
                 self.board[row][column + 1] = 1
                 self.board[row][column - 1] = 1
-        # TODO Jump handle nashode. 'canGo' ham bayad edit beshe
+
 
     def go(self, player,
            direction):
@@ -178,4 +178,4 @@ class Board:
     def checkForTrap(self):
         p1=self.pathToOtherSide(self.player1.row,self.player1.column,self.player1.goalRow)
         p2 = self.pathToOtherSide(self.player2.row, self.player2.column, self.player2.goalRow)
-        return (p1 and p2)
+        return not (p1 and p2)
