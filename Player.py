@@ -15,7 +15,7 @@ class Player:
         else:
             self.goalRow = startingColumn * 2
 
-    # TODO yek rah baraye residan be maqsad handle nashode!
+
     def getValidActions(self, board: Board) -> typing.List[
         Action]:
         available_actions = []
