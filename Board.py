@@ -1,3 +1,6 @@
+from collections import deque
+import math
+
 class Board:
     # const
     # Empty_block = 0
@@ -21,8 +24,9 @@ class Board:
         self.player2 = player2
 
     def displayboard(self):
+        print("   1 2 3 4 5 6 7 8 9 0 1 2 3")
         for indexR, r in enumerate(self.board):
-
+            print("{:<3}".format(indexR + 1), end="")
             for indexC, c in enumerate(r):
                 if c == 0:
                     print("█", end=" ")
@@ -46,6 +50,7 @@ class Board:
         the Quoridor board.
         """
         return row >= 0 and col >= 0 and row < self.size and col < self.size
+
     def checkForWall(self, row, column):  # for pathToOtherSide
         if row == 2:
             return (1, 0)
@@ -56,7 +61,7 @@ class Board:
         elif column == 2:
             return (0, 1)
 
-    def pathToOtherSide(self,row,column,goalRow) -> bool:
+    def pathToOtherSide(self, row, column, goalRow) -> bool:
         stack = [(row, column)]
         visited = set()
         while stack:
@@ -75,11 +80,11 @@ class Board:
                 if self.valid(new_x, new_y) and self.board[new_xW][new_yW] == -1:
                     stack.append((new_x, new_y))  # Add legal moves to the stack
         return False  # No path found
+
     def checkForTrap(self):
-        p1=self.pathToOtherSide(self.player1.row,self.player1.column,self.player1.goalRow)
+        p1 = self.pathToOtherSide(self.player1.row, self.player1.column, self.player1.goalRow)
         p2 = self.pathToOtherSide(self.player2.row, self.player2.column, self.player2.goalRow)
         return not (p1 and p2)
-
 
     def canPlaceWall(self, row, column, direction: str) -> bool:
         """
@@ -112,7 +117,6 @@ class Board:
                 self.board[row][column] = 1
                 self.board[row][column + 1] = 1
                 self.board[row][column - 1] = 1
-
 
     def go(self, player,
            direction):
@@ -155,7 +159,7 @@ class Board:
         """
         if direction == 'up':
             if self.valid(player.row - 2, player.column) and self.board[player.row - 2][
-                player.column] == 0:  # age block khali bood
+                player.column] == 0 :  # age block khali bood
                 return (self.board[player.row - 1][player.column] == -1, False)  ## ham valid bashe ham wall nabashe
             elif self.valid(player.row - 4, player.column):  # age player dige bood
                 return (self.board[player.row - 3][player.column] == -1, True)
@@ -167,7 +171,8 @@ class Board:
                 return (self.board[player.row + 1][player.column] == -1, False)
             elif self.valid(player.row + 4, player.column):
                 return (self.board[player.row + 3][player.column] == -1, True)
-            else: return(False,False)
+            else:
+                return (False, False)
 
         elif direction == 'right':
             if self.valid(player.row, player.column + 2) and self.board[player.row][
@@ -186,5 +191,37 @@ class Board:
             else:
                 return (False, False)
         else:
-            raise  Exception('inavlid input')
+            raise Exception('inavlid input')
 
+    def shortestPath(self, player):
+
+        """
+        Perform Breadth-First Search to find the shortest path from start to target.
+        """
+        visited = [[False] * 13 for _ in range(13)]
+        queue = deque([(player.row, player.column, 0)])
+        visited[player.row][player.column] = True
+
+        while queue:
+            row, col, distance = queue.popleft()
+
+            if row == player.goalRow:
+                return distance
+
+            for dr, dc in [(2, 0), (-2, 0), (0, 2), (0, -2)]:
+                new_xW, new_yW = self.checkForWall(dr, dc)
+                new_xW, new_yW = row + new_xW, col + new_yW
+                new_row, new_col = row + dr, col + dc
+                if self.valid(new_row, new_col) and not visited[new_row][new_col] and self.board[new_xW][new_yW] == -1:
+                    queue.append((new_row, new_col, distance + 1))
+                    visited[new_row][new_col] = True
+
+        # If target is not reachable
+        return -1
+
+    def distance(self, point1, playerName):
+
+        x1, y1 = point1
+        if playerName=='player 1':x2, y2 = self.player2.row,self.player2.column
+        else :x2, y2 = self.player1.row,self.player1.column
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)

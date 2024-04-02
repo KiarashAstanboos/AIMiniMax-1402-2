@@ -2,7 +2,7 @@ from Action import Action
 from Board import Board
 import copy
 import typing
-
+import math
 
 class Player:
     def __init__(self, walls, name, startingRow, startingColumn):
@@ -33,18 +33,21 @@ class Player:
             for i in range(1, board.size, 2):
                 for j in range(1, len(board.board[i]), 2):
                     if board.canPlaceWall(i, j, 'vertical'):
-                        board_copy = copy.deepcopy(board)
-                        board_copy.addWall(i, j, 'vertical')
-                        if not board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
+                        if board.distance((i,j),self.name)<3:
+                            board_copy = copy.deepcopy(board)
+                            board_copy.addWall(i, j, 'vertical')
+                            if not board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'):
-                        board_copy2 = copy.deepcopy(board)
-                        board_copy2.addWall(i, j, 'horizontal')
-                        if not board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
+                         if board.distance((i,j),self.name) < 3:
+                            board_copy2 = copy.deepcopy(board)
+                            board_copy2.addWall(i, j, 'horizontal')
+                            if not board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
         return available_actions
 
     def doGo(self, board: Board, direction):
 
         board.go(self, direction)
+
 
     def doBuild(self, board: Board, row, column, direction):
         board.addWall(row, column, direction)
