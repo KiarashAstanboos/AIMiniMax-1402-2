@@ -59,7 +59,7 @@ while True:
             print()
 
     board.displayboard()
-    if Round >60:
+    if Round >30:
         print(board.shortestPath(player1))
         print(board.shortestPath(player2))
         print(board.canGo(player1,"up"))

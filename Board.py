@@ -24,9 +24,9 @@ class Board:
         self.player2 = player2
 
     def displayboard(self):
-        print("   1 2 3 4 5 6 7 8 9 0 1 2 3")
+
         for indexR, r in enumerate(self.board):
-            print("{:<3}".format(indexR + 1), end="")
+
             for indexC, c in enumerate(r):
                 if c == 0:
                     print("█", end=" ")
@@ -178,7 +178,7 @@ class Board:
             if self.valid(player.row, player.column + 2) and self.board[player.row][
                 player.column + 2] == 0:
                 return (self.board[player.row][player.column + 1] == -1, False)
-            elif self.valid(player.row, player.column + 3):
+            elif self.valid(player.row, player.column + 4):
                 return (self.board[player.row][player.column + 3] == -1, True)
             else:
                 return (False, False)
