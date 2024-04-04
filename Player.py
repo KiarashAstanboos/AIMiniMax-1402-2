@@ -24,10 +24,29 @@ class Player:
         cango3, jump = board.canGo(self, 'right')
         cango4, jump = board.canGo(self, 'left')
 
+        cango5, jump = board.canGo(self, 'upRight')
+        cango6, jump = board.canGo(self, 'upLeft')
+        cango7, jump = board.canGo(self, 'rightUp')
+        cango8, jump = board.canGo(self, 'rightDown')
+        cango9, jump = board.canGo(self, 'downRight')
+        cango10, jump = board.canGo(self, 'downLeft')
+        cango11, jump = board.canGo(self, 'leftUp')
+        cango12, jump = board.canGo(self, 'leftDown')
+
         if cango1: available_actions.append(Action(None, None, 'up'))
         if cango2: available_actions.append(Action(None, None, 'down'))
         if cango3: available_actions.append(Action(None, None, 'right'))
         if cango4: available_actions.append(Action(None, None, 'left'))
+
+        if cango5: available_actions.append(Action(None, None, 'upRight'))
+        if cango6: available_actions.append(Action(None, None, 'upLeft'))
+        if cango7: available_actions.append(Action(None, None, 'rightUp'))
+        if cango8: available_actions.append(Action(None, None, 'rightDown'))
+        if cango9: available_actions.append(Action(None, None, 'downRight'))
+        if cango10: available_actions.append(Action(None, None, 'downLeft'))
+        if cango11: available_actions.append(Action(None, None, 'leftUp'))
+        if cango12: available_actions.append(Action(None, None, 'leftDown'))
+
 
         if self.walls > 0:
             for i in range(1, board.size, 2):

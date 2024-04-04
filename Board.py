@@ -1,6 +1,7 @@
 from collections import deque
 import math
 
+
 class Board:
     # const
     # Empty_block = 0
@@ -150,6 +151,26 @@ class Board:
                     player.column -= 4
                 else:
                     player.column -= 2
+
+
+            elif direction == 'upRight' or direction == 'rightUp':
+
+                player.row -= 2
+                player.column += 2
+
+            elif direction == 'upLeft' or direction == 'leftUp':
+
+                player.row -= 2
+                player.column -= 2
+            elif direction == 'downRight' or direction == 'rightDown':
+
+                player.row += 2
+                player.column += 2
+            elif direction == 'downLeft' or direction == 'downLeft''leftDown':
+
+                player.row += 2
+                player.column -= 2
+
         self.board[player.row][player.column] = int(player.name[-1] * 2)
 
     def canGo(self, player, direction) -> (bool, bool):
@@ -159,7 +180,7 @@ class Board:
         """
         if direction == 'up':
             if self.valid(player.row - 2, player.column) and self.board[player.row - 2][
-                player.column] == 0 :  # age block khali bood
+                player.column] == 0:  # age block khali bood
                 return (self.board[player.row - 1][player.column] == -1, False)  ## ham valid bashe ham wall nabashe
             elif self.valid(player.row - 4, player.column):  # age player dige bood
                 return (self.board[player.row - 3][player.column] == -1, True)
@@ -190,11 +211,93 @@ class Board:
                 return (self.board[player.row][player.column - 3] == -1, True)
             else:
                 return (False, False)
+        elif direction == 'upRight':
+            if self.valid(player.row - 2, player.column + 2) and self.board[player.row - 1][player.column] == -1 and \
+                    self.board[player.row - 2][player.column] != 0 and self.board[player.row - 2][
+                player.column + 1] == -1 :
+                if self.valid(player.row-3, player.column):
+                    return (self.board[player.row-3][player.column ] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+
+        elif direction == 'upLeft':
+            if self.valid(player.row - 2, player.column - 2) and self.board[player.row - 1][player.column] == -1 and \
+                    self.board[player.row - 2][player.column] != 0 and self.board[player.row - 2][
+                player.column - 1] == -1 :
+                if self.valid(player.row - 3, player.column):
+                    return (self.board[player.row - 3][player.column] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+
+        elif direction == 'rightUp':
+            if self.valid(player.row - 2, player.column + 2) and self.board[player.row][player.column + 1] == -1 and \
+                    self.board[player.row][player.column + 2] != 0 and self.board[player.row - 1][
+                player.column + 2] == -1 :
+                if self.valid(player.row , player.column+3):
+                    return (self.board[player.row ][player.column+3] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+        elif direction == 'rightDown':
+            if self.valid(player.row + 2, player.column + 2) and self.board[player.row][player.column + 1] == -1 and \
+                    self.board[player.row][player.column + 2] != 0 and self.board[player.row + 1][
+                player.column + 2] == -1 :
+                if self.valid(player.row, player.column + 3):
+                    return (self.board[player.row][player.column + 3] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+        elif direction == 'downRight':
+            if self.valid(player.row + 2, player.column + 2) and self.board[player.row + 1][player.column] == -1 and \
+                    self.board[player.row + 2][player.column] != 0 and self.board[player.row + 2][
+                player.column + 1] == -1:
+                if self.valid(player.row + 3, player.column):
+                    return (self.board[player.row + 3][player.column] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+        elif direction == 'downLeft':
+            if self.valid(player.row + 2, player.column - 2) and self.board[player.row + 1][player.column] == -1 and \
+                    self.board[player.row + 2][player.column] != 0 and self.board[player.row + 2][
+                player.column - 1] == -1:
+                if self.valid(player.row + 3, player.column):
+                    return (self.board[player.row + 3][player.column] == 1, False)
+                else:
+                    return (True, False)
+
+            else:
+                return (False, False)
+        elif direction == 'leftUp':
+            if self.valid(player.row - 2, player.column - 2) and self.board[player.row - 1][player.column] == -1 and \
+                    self.board[player.row][player.column - 2] != 0 and self.board[player.row - 1][
+                player.column - 2] == -1 :
+                if self.valid(player.row , player.column-3):
+                    return (self.board[player.row ][player.column-3] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
+        elif direction == 'leftDown':
+            if self.valid(player.row + 2, player.column - 2) and self.board[player.row + 1][player.column] == -1 and \
+                    self.board[player.row][player.column - 2] != 0 and self.board[player.row + 1][
+                player.column - 2] == -1 :
+                if self.valid(player.row, player.column - 3):
+                    return (self.board[player.row][player.column - 3] == 1, False)
+                else:
+                    return (True, False)
+            else:
+                return (False, False)
         else:
             raise Exception('inavlid input')
 
     def shortestPath(self, player):
-
         """
         Perform Breadth-First Search to find the shortest path from start to target.
         """
@@ -220,8 +323,9 @@ class Board:
         return -1
 
     def distance(self, point1, playerName):
-
         x1, y1 = point1
-        if playerName=='player 1':x2, y2 = self.player2.row,self.player2.column
-        else :x2, y2 = self.player1.row,self.player1.column
+        if playerName == 'player 1':
+            x2, y2 = self.player2.row, self.player2.column
+        else:
+            x2, y2 = self.player1.row, self.player1.column
         return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
