@@ -4,7 +4,7 @@ from Action import Action, doAction
 from AI import AI
 
 size = 7
-depth = 6
+depth = 4
 player2 = Player(8, 'player 2', 0, size - 1)
 player1 = Player(8, 'player 1', size * 2 - 2, size - 1)
 
