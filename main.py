@@ -4,9 +4,9 @@ from Action import Action, doAction
 from AI import AI
 
 size = 7
-depth = 5
-player2 = Player(10, 'player 2', 0, size - 1)
-player1 = Player(10, 'player 1', size * 2 - 2, size - 1)
+depth = 6
+player2 = Player(8, 'player 2', 0, size - 1)
+player1 = Player(8, 'player 1', size * 2 - 2, size - 1)
 
 board = Board(size, player1, player2)
 
@@ -59,14 +59,6 @@ while True:
             print()
 
     board.displayboard()
-    if Round > 0:
-        print(board.shortestPath(player1))
-        print(board.shortestPath(player2))
-        print(board.canGo(player1,"up"))
-        print(board.canGo(player2, "down"))
-        print(board.shortestPath(player2)-board.shortestPath(player1))
-    print()
-    print()
 
     if player1.terminal_test():
         print(f"{player1.name} wins!")
@@ -74,8 +66,8 @@ while True:
     if player2.terminal_test():
         print(f"{player2.name} wins!")
         exit()
-    print
+
     isPalyer1 = not isPalyer1
     Round+=1
-    print(Round)
+    print("Round: " + str(Round))
 

@@ -28,7 +28,8 @@ class AI:
 
         return player_copy, opponent_copy, next_board
 
-    def succusors(self, board: Board, player: Player, opponent: Player, reverse=False):
+
+    def succesors(self, board: Board, player: Player, opponent: Player, reverse=False):
         if (reverse):
             actions = opponent.getValidActions(board)
         else:
@@ -48,46 +49,20 @@ class AI:
         return result
 
     def minimax(self, board: Board, player: Player, opponent: Player, depth):
-        alpha = -100000000
-        beta = 100000000
-        _, move = self.max(board, player, opponent, depth, alpha, beta)
+        """
+        Return the best action
+        """
 
-        return move['action']
+        pass
 
     def max(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
-        if player.terminal_test(): return utility(board, player, opponent), None
-        if depth == 0: return utility(board, player, opponent), None
-
-        possible_states = self.succusors(board, player, opponent)
-        beststate = None
-        bestvalue = self.MIN_VALUE
-        for state in possible_states:
-            temp, _ = self.min(state['board'], state['player'], state['opponent'], depth - 1, alpha, beta)
-
-            if bestvalue < temp:
-                bestvalue = temp
-                beststate = state
-
-            if bestvalue >= beta: return bestvalue, beststate
-            alpha = max(alpha, bestvalue)
-
-        return bestvalue, beststate
+        """
+        choose the best state from succesors and return it and its value
+        """
+        pass
 
     def min(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
-        if player.terminal_test(): return utility(board, player, opponent), None
-        if depth == 0: return utility(board, player, opponent), None
-
-        possible_states = self.succusors(board, player, opponent, True)
-        beststate = None
-        bestvalue = self.MAX_VALUE
-        for state in possible_states:
-            temp, _ = self.max(state['board'], state['player'], state['opponent'], depth - 1, alpha, beta)
-
-            if bestvalue > temp:
-                bestvalue = temp
-                beststate = state
-
-            if bestvalue <= alpha : return bestvalue , beststate
-            beta = min(beta , bestvalue)
-
-        return bestvalue, beststate
+        """
+        choose the worst state from succesors and return it and its value
+        """
+        pass
