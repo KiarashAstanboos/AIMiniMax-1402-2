@@ -15,7 +15,7 @@ def utility2(board: Board, player: Player, opponent: Player):
     value = 0
     if player.terminal_test():
         value += 1000000
-
-    value += board.shortestPath(opponent) - board.shortestPath(player) * 1.1
+    #
+    # value += board.shortestPath(opponent) - board.shortestPath(player) * 1.1
 
     return value
