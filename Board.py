@@ -182,7 +182,7 @@ class Board:
             if self.valid(player.row - 2, player.column) and self.board[player.row - 2][
                 player.column] == 0:  # age block khali bood
                 return (self.board[player.row - 1][player.column] == -1, False)  ## ham valid bashe ham wall nabashe
-            elif self.valid(player.row - 4, player.column):  # age player dige bood
+            elif self.valid(player.row - 4, player.column) and self.board[player.row - 1][player.column] == -1:  # age player dige bood
                 return (self.board[player.row - 3][player.column] == -1, True)
             else:
                 return (False, False)
@@ -190,7 +190,7 @@ class Board:
             if self.valid(player.row + 2, player.column) and self.board[player.row + 2][
                 player.column] == 0:
                 return (self.board[player.row + 1][player.column] == -1, False)
-            elif self.valid(player.row + 4, player.column):
+            elif self.valid(player.row + 4, player.column)and self.board[player.row + 1][player.column] == -1:
                 return (self.board[player.row + 3][player.column] == -1, True)
             else:
                 return (False, False)
@@ -199,7 +199,7 @@ class Board:
             if self.valid(player.row, player.column + 2) and self.board[player.row][
                 player.column + 2] == 0:
                 return (self.board[player.row][player.column + 1] == -1, False)
-            elif self.valid(player.row, player.column + 4):
+            elif self.valid(player.row, player.column + 4)and self.board[player.row ][player.column+1] == -1:
                 return (self.board[player.row][player.column + 3] == -1, True)
             else:
                 return (False, False)
@@ -207,7 +207,7 @@ class Board:
             if self.valid(player.row, player.column - 2) and self.board[player.row][
                 player.column - 2] == 0:
                 return (self.board[player.row][player.column - 1] == -1, False)
-            elif self.valid(player.row, player.column - 4):
+            elif self.valid(player.row, player.column - 4)and self.board[player.row ][player.column-1] == -1:
                 return (self.board[player.row][player.column - 3] == -1, True)
             else:
                 return (False, False)
