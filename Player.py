@@ -4,6 +4,7 @@ import copy
 import typing
 import math
 
+
 class Player:
     def __init__(self, walls, name, startingRow, startingColumn):
         self.walls = walls
@@ -14,7 +15,6 @@ class Player:
             self.goalRow = 0
         else:
             self.goalRow = startingColumn * 2
-
 
     def getValidActions(self, board: Board) -> typing.List[
         Action]:
@@ -47,17 +47,16 @@ class Player:
         if cango11: available_actions.append(Action(None, None, 'leftUp'))
         if cango12: available_actions.append(Action(None, None, 'leftDown'))
 
-
         if self.walls > 0:
             for i in range(1, board.size, 2):
                 for j in range(1, len(board.board[i]), 2):
                     if board.canPlaceWall(i, j, 'vertical'):
-                        if board.distance((i,j),self.name)<3:
+                        if board.distance((i, j), self.name) < 3:
                             board_copy = copy.deepcopy(board)
                             board_copy.addWall(i, j, 'vertical')
                             if not board_copy.checkForTrap():  available_actions.append(Action(i, j, 'vertical'))
                     if board.canPlaceWall(i, j, 'horizontal'):
-                         if board.distance((i,j),self.name) < 3:
+                        if board.distance((i, j), self.name) < 3:
                             board_copy2 = copy.deepcopy(board)
                             board_copy2.addWall(i, j, 'horizontal')
                             if not board_copy2.checkForTrap(): available_actions.append(Action(i, j, 'horizontal'))
@@ -67,11 +66,9 @@ class Player:
 
         board.go(self, direction)
 
-
     def doBuild(self, board: Board, row, column, direction):
         board.addWall(row, column, direction)
         self.walls -= 1
-
 
     def terminal_test(self):
         if self.goalRow == self.row:

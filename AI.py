@@ -51,7 +51,7 @@ class AI:
         alpha = -100000000
         beta = 100000000
         if player.name == 'player 1':
-             _, move = self.max1(board, player, opponent, depth, alpha, beta)
+            _, move = self.max1(board, player, opponent, depth, alpha, beta)
         elif player.name == 'player 2':
             _, move = self.max2(board, player, opponent, depth, alpha, beta)
 
@@ -90,12 +90,10 @@ class AI:
                 bestvalue = temp
                 beststate = state
 
-            if bestvalue <= alpha : return bestvalue , beststate
-            beta = min(beta , bestvalue)
+            if bestvalue <= alpha: return bestvalue, beststate
+            beta = min(beta, bestvalue)
 
         return bestvalue, beststate
-
-
 
     def max2(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
         if player.terminal_test(): return utility2(board, player, opponent), None
@@ -116,8 +114,6 @@ class AI:
 
         return bestvalue, beststate
 
-
-
     def min2(self, board: Board, player: Player, opponent: Player, depth, alpha, beta):
         if player.terminal_test(): return utility2(board, player, opponent), None
         if depth == 0: return utility2(board, player, opponent), None
@@ -132,7 +128,7 @@ class AI:
                 bestvalue = temp
                 beststate = state
 
-            if bestvalue <= alpha : return bestvalue , beststate
-            beta = min(beta , bestvalue)
+            if bestvalue <= alpha: return bestvalue, beststate
+            beta = min(beta, bestvalue)
 
         return bestvalue, beststate

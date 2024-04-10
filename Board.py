@@ -275,7 +275,7 @@ class Board:
             else:
                 return (False, False)
         elif direction == 'leftUp':
-            if self.valid(player.row - 2, player.column - 2) and self.board[player.row - 1][player.column] == -1 and \
+            if self.valid(player.row - 2, player.column - 2) and self.board[player.row ][player.column-1] == -1 and \
                     self.board[player.row][player.column - 2] != 0 and self.board[player.row - 1][
                 player.column - 2] == -1 :
                 if self.valid(player.row , player.column-3):
@@ -285,7 +285,7 @@ class Board:
             else:
                 return (False, False)
         elif direction == 'leftDown':
-            if self.valid(player.row + 2, player.column - 2) and self.board[player.row + 1][player.column] == -1 and \
+            if self.valid(player.row + 2, player.column - 2) and self.board[player.row ][player.column-1] == -1 and \
                     self.board[player.row][player.column - 2] != 0 and self.board[player.row + 1][
                 player.column - 2] == -1 :
                 if self.valid(player.row, player.column - 3):
